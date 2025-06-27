@@ -76,7 +76,8 @@ form.addEventListener('submit', function(event) {
             };
 
             // URL of the remote endpoint where you want to send the POST request
-            const url = 'https://infinite-sands-52519-06605f47cb30.herokuapp.com/login'; // Replace with your actual endpoint
+            //const url = 'https://infinite-sands-52519-06605f47cb30.herokuapp.com/login'; // Replace with your actual endpoint
+            const url = 'http://localhost:5006/login'; // Replace with your actual endpoint
 
             // Send the POST request using fetch
             fetch(url, {
@@ -99,7 +100,8 @@ form.addEventListener('submit', function(event) {
                     showModal();
                 }else {
                     sessionStorage.setItem("allowedRoles",  data.roles || []);
-                    window.location.href = "https://ita-hscp.github.io/ita/"; 
+                //    window.location.href = "https://ita-hscp.github.io/ita/";
+                    window.location.href = "https://aarnav268.github.io/ita/"; // Redirect to the main page 
                 }
             })
             .catch(error => {
