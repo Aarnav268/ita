@@ -1,11 +1,21 @@
--- ---
-# category: HSCP 1
-# order: 3
-# title: Conversation Home Work Test activity
 ---
-<h1>Upload and Play a WAV File</h1>
-<p>Select a WAV file to play it in the browser.</p>
-<input type="file" id="fileInput" accept=".wav">
-<audio id="audioPlayer" controls style="display: none;"></audio>
-<button id="conversation-saveButton">Finish Conversation</button>
-<div id="tracker"></div>
+category: HSCP 3
+order: 8
+title: தமிழ்
+---
+<script src="{{ site.baseurl }}/scripts/track.js">tracker();</script>
+<h2>Fill in the Blanks - Drag and Drop Exercise</h2>
+
+<p>Drag the correct answers to the blanks:</p>
+
+<div id="questions"><div id="question" data-id="1"></div>
+    <div>
+        <div class="draggable" id="answer1" draggable="true" ondragstart="drag(event)"></div>
+        <div class="draggable" id="answer2" draggable="true" ondragstart="drag(event)"></div>
+    </div>
+</div>
+
+<p class="message" id="message"></p>
+<button id="next-match-btn" onclick="onNext()">next</button>
+
+<script src="{{ site.baseurl }}/scripts/drag-and-drop.js"></script>
