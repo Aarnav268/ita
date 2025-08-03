@@ -24,7 +24,7 @@ layout: default
   const assignmentBox = document.getElementById("assignmentBox");
 
   function loadWeek(week) {
-    fetch("/api/homework/" + week)
+    fetch("(https://aarnav268.github.io/ita/)" + week)
       .then((res) => res.json())
       .then((data) => {
         assignmentBox.textContent = data.instructions || "No instructions found.";
