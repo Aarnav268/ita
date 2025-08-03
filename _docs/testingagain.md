@@ -1,67 +1,48 @@
 ---
-category: HSCP 3
-order: 8
-title: தமிழ் - Teacher Page
+title: Teacher Homework Dashboard
+layout: default
 ---
 
-<script src="{{ site.baseurl }}/scripts/track.js">tracker();</script>
-<style>
-  .container {
-    display: flex;
-    flex-direction: row;
-  }
-  .sidebar {
-    width: 200px;
-    border-right: 1px solid #ccc;
-    padding: 10px;
-  }
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-  }
-  .week-button {
-    display: block;
-    margin: 10px 0;
-    cursor: pointer;
-  }
-</style>
+<h2 style="color:#1e90ff;">📘 Homework Dashboard</h2>
 
-<div class="container">
-  <!-- Sidebar for Week Buttons -->
-  <div class="sidebar">
-    <h3>Weeks</h3>
-    <button class="week-button" onclick="showHomework(1)">Week 1</button>
-    <button class="week-button" onclick="showHomework(2)">Week 2</button>
-    <button class="week-button" onclick="showHomework(3)">Week 3</button>
-    <button class="week-button" onclick="showHomework(4)">Week 4</button>
-    <button class="week-button" onclick="showHomework(5)">Week 5</button>
+<div style="display:flex;">
+  <div style="width:220px; padding:10px;">
+    <h4>Weeks</h4>
+    <ul id="weekList"></ul>
   </div>
 
-  <!-- Content Area -->
-  <div class="content">
-    <h2 id="week-title">Select a week to view homework</h2>
-    <p id="homework-text"></p>
-    <button id="assign-btn" onclick="assignHomework()" style="display:none;">Assign to Students</button>
+  <div style="flex:1; padding:10px;">
+    <h4>Assignment</h4>
+    <pre id="assignmentBox" style="background:#f0f0f0; padding:12px; white-space:pre-wrap;"></pre>
+    <button id="assignButton">📤 Assign to Students</button>
   </div>
 </div>
 
 <script>
-  const homeworkByWeek = {
-    1: "Week 1 Homework: Write 5 Tamil sentences using the new vocabulary.",
-    2: "Week 2 Homework: Read Chapter 2 and answer questions on page 5.",
-    3: "Week 3 Homework: Practice the song for Pongal celebration.",
-    4: "Week 4 Homework: Complete grammar worksheet on tenses.",
-    5: "Week 5 Homework: Write a short essay about your family in Tamil."
+  const weeks = [1, 2, 3, 5, 16, 17, 18]; // same keys as backend
+  const weekListEl = document.getElementById("weekList");
+  const assignmentBox = document.getElementById("assignmentBox");
+
+  function loadWeek(week) {
+    fetch("/api/homework/" + week)
+      .then((res) => res.json())
+      .then((data) => {
+        assignmentBox.textContent = data.instructions || "No instructions found.";
+      })
+      .catch(() => {
+        assignmentBox.textContent = "❌ Failed to load assignment.";
+      });
+  }
+
+  weeks.forEach((w) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="#" onclick="loadWeek(${w})">Week ${w}</a>`;
+    weekListEl.appendChild(li);
+  });
+
+  loadWeek(weeks[0]); // default to week 1
+
+  document.getElementById("assignButton").onclick = () => {
+    alert("✅ Assigned to students!");
   };
-
-  function showHomework(week) {
-    document.getElementById("week-title").innerText = "Week " + week;
-    document.getElementById("homework-text").innerText = homeworkByWeek[week];
-    document.getElementById("assign-btn").style.display = "inline-block";
-  }
-
-  function assignHomework() {
-    alert("Homework assigned to all students in the section!");
-    // TODO: Replace with backend call to assign to students
-  }
 </script>
